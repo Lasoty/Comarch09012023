@@ -1,0 +1,12 @@
+﻿<div class="row">
+    <img src="@src" @attributes=AllOtherAttributes />
+</div>
+
+@code  
+{
+    [Parameter]
+    public string src { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object> AllOtherAttributes { get; set; }
+}

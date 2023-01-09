@@ -28,8 +28,12 @@ Ostatnia wartość MultipleOfThree to @LastMultipleThreeValue*@
   </CascadingValue>
 </CascadingValue>
 
+<MyCustomImage src=@url alt="Custom text" />
+
 @code
 {
+    Dictionary<string, object> AdditionalAttributes;
+    string url = "https://randomuser.me/api/portraits/lego/1.jpg";
     bool firstOptionValue;
     bool secondOptionValue;
 
@@ -39,6 +43,13 @@ Ostatnia wartość MultipleOfThree to @LastMultipleThreeValue*@
     {
         //myComponent.CurrentCounterValue = 32;
         base.OnInitialized();
+
+        AdditionalAttributes = new Dictionary<string, object>();
+
+        for (int i = 0; i < 5; i++)
+        {
+            AdditionalAttributes.Add("attribute_" + i, i);
+        }
     }
 
     public int LastMultipleThreeValue { get; set; }
