@@ -35,5 +35,11 @@ namespace Bibliotekarz.Server.Controllers
 
             return Ok(result);
         }
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> Add(BookDto book)
+        {
+            return Ok();
+        }
     }
 }

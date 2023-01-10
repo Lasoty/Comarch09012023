@@ -2,27 +2,81 @@
 @inject IVersionProvider VersionProvider
 
 
-<Table Striped>
-  <TableHeader>
-    <TableRow>
-      <TableHeaderCell>Autor</TableHeaderCell>
-      <TableHeaderCell>Tytuł</TableHeaderCell>
-      <TableHeaderCell>Liczba stron</TableHeaderCell>
-      <TableHeaderCell>Czy wypożyczony</TableHeaderCell>
-      <TableHeaderCell>Imie wypożycz.</TableHeaderCell>
-      <TableHeaderCell>Nazwisko wypożycz.</TableHeaderCell>
-    </TableRow>
-  </TableHeader>
-  <TableBody>
-    <Repeater Items="books">
+<Row>
+  <Column ColumnSize="ColumnSize.Is4.OnDesktop.IsFull.OnMobile">
+    <Button Color="Color.Success" Clicked="AddBook">Dodaj książkę</Button>
+  </Column>
+</Row>
+
+<Row>
+  <Table Striped>
+    <TableHeader>
       <TableRow>
-        <TableRowCell>@context.Author</TableRowCell>
-        <TableRowCell>@context.Title</TableRowCell>
-        <TableRowCell>@context.PageCount</TableRowCell>
-        <TableRowCell>@(context.IsBorrowed ? "Tak" : "Nie")</TableRowCell>
-        <TableRowCell>@context.Borrower?.FirstName</TableRowCell>
-            <TableRowCell>@context.Borrower?.LastName</TableRowCell>
+        <TableHeaderCell>Autor</TableHeaderCell>
+        <TableHeaderCell>Tytuł</TableHeaderCell>
+        <TableHeaderCell>Liczba stron</TableHeaderCell>
+        <TableHeaderCell>Czy wypożyczony</TableHeaderCell>
+        <TableHeaderCell>Imie wypożycz.</TableHeaderCell>
+        <TableHeaderCell>Nazwisko wypożycz.</TableHeaderCell>
       </TableRow>
-    </Repeater>
-  </TableBody>
-</Table>
+    </TableHeader>
+    <TableBody>
+      <Repeater Items="books">
+        <TableRow>
+          <TableRowCell>@context.Author</TableRowCell>
+          <TableRowCell>@context.Title</TableRowCell>
+          <TableRowCell>@context.PageCount</TableRowCell>
+          <TableRowCell>@(context.IsBorrowed ? "Tak" : "Nie")</TableRowCell>
+              <TableRowCell>@context.Borrower?.FirstName</TableRowCell>
+              <TableRowCell>@context.Borrower?.LastName</TableRowCell>
+            </TableRow>
+          </Repeater>
+        </TableBody>
+      </Table>
+    </Row>
+
+    <Modal @ref="addBookModalRef">
+      <ModalContent Size="ModalSize.Large" Centered="true">
+        <ModalHeader>
+          <ModalTitle>
+            <Icon Name="IconName.Edit" />
+            Dodawanie książki
+          </ModalTitle>
+          <CloseButton />
+        </ModalHeader>
+        <ModalBody MaxHeight="500">
+          <Field>
+            <FieldLabel>Autor</FieldLabel>
+            <TextEdit Autofocus Placeholder="Autor pozycji..." @bind-Text="addBookDto.Author" />
+          </Field>
+          <Field>
+            <FieldLabel>Tytuł</FieldLabel>
+            <TextEdit Placeholder="Tytuł..." @bind-Text="addBookDto.Title" />
+          </Field>
+          <Field>
+            <FieldLabel>Liczba stron</FieldLabel>
+            <NumericEdit TValue="int" @bind-Value="addBookDto.PageCount"></NumericEdit>
+          </Field>
+          <Field>
+            <FieldLabel>Czy wypożyczona</FieldLabel>
+            <Check TValue="bool" @bind-Checked="addBookDto.IsBorrowed"></Check>
+          </Field>
+
+          @if(addBookDto.IsBorrowed)
+            {
+          <Field>
+            <FieldLabel>Imię wypożyczającego</FieldLabel>
+            <TextEdit Autofocus @bind-Text="addBookDto.Borrower.FirstName" />
+          </Field>
+          <Field>
+            <FieldLabel>Nazwisko wypożyczającego</FieldLabel>
+            <TextEdit @bind-Text="addBookDto.Borrower.LastName" />
+          </Field>
+            }
+        </ModalBody>
+        <ModalFooter>
+          <Button Color="Color.Secondary" Clicked="@HideModal">Cancel</Button>
+          <Button Color="Color.Primary" Clicked="@AddBookModal">Save Changes</Button>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>

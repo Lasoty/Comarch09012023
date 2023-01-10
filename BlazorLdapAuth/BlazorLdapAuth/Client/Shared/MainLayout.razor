@@ -1,0 +1,38 @@
+﻿@using BlazorLdapAuth.Client.Authentication
+@inherits LayoutComponentBase
+@inject AuthenticationStateProvider authStateProvider
+@inject NavigationManager navManager
+
+<div class="page">
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+
+    <div class="main">
+        <div class="top-row px-4">
+            <a href="http://blazor.net" target="_blank" class="ml-md-auto">About</a>
+
+            <AuthorizeView>
+                <Authorized>
+                    <a @onclick="OnLogoutClicked" href="javascript:void(0)">Wyloguj</a>
+                </Authorized>
+                <NotAuthorized>
+                    <a href="/login">Zaloguj</a>
+                </NotAuthorized>
+            </AuthorizeView>
+        </div>
+
+        <div class="content px-4">
+            @Body
+        </div>
+    </div>
+</div>
+
+@code 
+{
+    private async Task OnLogoutClicked()
+    {
+        await ((CustomAuthenticationStateProvider)authStateProvider).UpdateAuthenticationState(null);
+        navManager.NavigateTo("/", true);
+    }
+}

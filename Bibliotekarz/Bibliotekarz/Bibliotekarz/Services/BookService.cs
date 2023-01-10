@@ -13,6 +13,11 @@ public class BookService : IBookService
         this.httpClient = httpClient;
     }
 
+    public async Task AddBook(BookDto addBookDto)
+    {
+        await httpClient.PostAsJsonAsync("/api/Book/Add", addBookDto);
+    }
+
     public async Task<ICollection<BookDto>> GetBooks()
     {
         ICollection<BookDto>? result = 
@@ -26,5 +31,6 @@ public class BookService : IBookService
 
 public interface IBookService
 {
+    Task AddBook(BookDto addBookDto);
     Task<ICollection<BookDto>> GetBooks();
 }
