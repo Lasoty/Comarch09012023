@@ -14,13 +14,15 @@
     </TableRow>
   </TableHeader>
   <TableBody>
-    <TableRow>
-      <TableRowCell></TableRowCell>
-      <TableRowCell></TableRowCell>
-      <TableRowCell></TableRowCell>
-      <TableRowCell></TableRowCell>
-      <TableRowCell></TableRowCell>
-      <TableRowCell></TableRowCell>
-    </TableRow>
+    <Repeater Items="books">
+      <TableRow>
+        <TableRowCell>@context.Author</TableRowCell>
+        <TableRowCell>@context.Title</TableRowCell>
+        <TableRowCell>@context.PageCount</TableRowCell>
+        <TableRowCell>@(context.IsBorrowed ? "Tak" : "Nie")</TableRowCell>
+        <TableRowCell>@context.Borrower?.FirstName</TableRowCell>
+            <TableRowCell>@context.Borrower?.LastName</TableRowCell>
+      </TableRow>
+    </Repeater>
   </TableBody>
 </Table>

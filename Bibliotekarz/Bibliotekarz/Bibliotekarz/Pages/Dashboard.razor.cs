@@ -12,6 +12,7 @@ public partial class Dashboard : ComponentBase
     [Inject]
     public INotificationService NotificationService { get; set; }
 
+    [Inject]
     public IBookService BookService { get; set; }
 
     protected override async Task OnInitializedAsync()
@@ -24,6 +25,8 @@ public partial class Dashboard : ComponentBase
         catch (Exception ex)
         {
             await NotificationService.Error("Błąd pobierania książek!");
+
+            Console.WriteLine(ex);
         }
     }
 }

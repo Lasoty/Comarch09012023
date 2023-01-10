@@ -16,7 +16,7 @@ public class BookService : IBookService
     public async Task<ICollection<BookDto>> GetBooks()
     {
         ICollection<BookDto>? result = 
-            await httpClient.GetFromJsonAsync<ICollection<BookDto>>("/Books/GetAll");
+            await httpClient.GetFromJsonAsync<ICollection<BookDto>>("/api/Book/GetAll");
 
         return result;
         //HttpResponseMessage response = await httpClient.GetAsync("/Books/GetAll");
