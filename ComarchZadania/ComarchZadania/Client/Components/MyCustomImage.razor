@@ -1,5 +1,7 @@
 ﻿<div class="row">
     <img src="@src" @attributes=AllOtherAttributes />
+
+    @ChildContent
 </div>
 
 @code  
@@ -9,4 +11,9 @@
 
     [Parameter(CaptureUnmatchedValues = true)]
     public Dictionary<string, object> AllOtherAttributes { get; set; }
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+    //[Parameter]
+    //public RenderFragment Footer { get; set; }
 }
